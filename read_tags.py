@@ -154,12 +154,13 @@ def make_tag_matrix(tag):
 		#If a paper is tagged, make a row of it with
 		# all its word counts and write to matrix
 		for tpaper in tagged_papers:
-			row = baserow
+			row = baserow.copy()
 			row["doc_id_"] = tpaper
 			i = 0
 			for paper in papers:
 				if paper == tpaper:
 					row[words.iloc[i]] = count.iloc[i]
+					# row[tpaper["term"]] = row["n"]
 				i+=1	
 			row["tag_id_"+tag.lower()] = tag_column[j]
 			j+=1
