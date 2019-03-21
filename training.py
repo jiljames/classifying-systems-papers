@@ -1,3 +1,9 @@
+# Jillian James, jiljames at reed dot edu
+
+# Python program for running ML algorithms that predicts
+# the contents of a systems paper using a bag-of-words model
+# consisting of words and bigrams from a dataset of computer systems
+# research papers. 
 
 import csv
 import pandas as pd
@@ -9,17 +15,6 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import train_test_split
 from sklearn import tree
 
-
-#################### CURRENT ISSUES #########################
-# 1. Using the test_matrix.csv file as open_csv,			#
-#	 both multinomialNB and decision tree 					#
-#	 behave erratically the algorithm behaves erratically.  #
-#		-Old split gives 100% F1 f1_score 					#
-#		-New split is all over the place ~ 16% - 80%.  		#
-# 2. Yet, for some reason on the regular open_csv file		#
-#		-Old split performs poorly. Usually F1 is below 30% #
-#		-New Split performs well. Upwards of 50% about 70%. #
-#############################################################
 
 def get_metrics(true_labels, predicted_labels):
 	#proportion of correct predictions in model
@@ -33,25 +28,12 @@ def get_metrics(true_labels, predicted_labels):
 
 
 def split(filename):
-	#This fuction takes 3 minutes at times. It's all the index calls.
+	# Prepare the data for training.
 	with open(filename, 'r') as tagcsv:
 		tf = pd.read_csv(tagcsv)
 		tagcsv.close()
 	column_length = (len(tf.columns))
-	# papers = tf.iloc[:,1:(column_length -1)]
-	# label = tf.iloc[:,(column_length -1):column_length]
-	# length = len(tf)
-
-	# ###OLD TRAIN SPLIT####
-
-	# count = int(0.7*len(tf["Name"]))
-	# train_features = papers[0:count]
-	# test_features = papers[count:length+1]
-	# train_labels = label[0:count]
-	# test_labels = label[count:length+1]
 	
-
-	####NEW TRAIN SPLIT####
 	train, test= train_test_split(tf, test_size = 0.2)
 	print("train: ", train)
 	print("test: ", test)
