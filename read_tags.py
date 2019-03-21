@@ -13,9 +13,9 @@ path = '/Users/jillianjames/systemsproject/fulltext'
 sorted_tags = ['analysis', 'bigscale', 'continuing', 'data', 'experience','experiment', 'negative', 'open', 'position', 'positive', 'preliminary', 'reproduction', 'simulation', 'survey', 'system'] 
 
 
-###### FOR READING TAGS AND GENERATING TAG_FEATURES.CSV #######
 
 def getConfAndPaper(filepath):
+	# Given a filepath, returns conference and paper.
 	confname = ""
 	paper = filepath[-11:-4]
 	place = -12
@@ -61,7 +61,8 @@ def generate_row(paper, manual, sorted_tags):
 
 
 def make_tag_features():
-	# Make column header:
+	# Given a conference and paper, returns the tags paper
+	# was classified with
 	column_labels = sorted_tags[:]
 	for i in range(len(column_labels)):
 		column_labels[i] = "tag_id_"+column_labels[i]

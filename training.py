@@ -63,7 +63,6 @@ def train_predict_evaluate(classifier, tagfile):
 
 
 def main():
-#	print(str(timeit.timeit(split("open"), number=1))+" seconds")
 	dtf = tree.DecisionTreeClassifier("entropy")
 
 	# print(train_predict_evaluate(MultinomialNB(), "open_matrix.csv"))
