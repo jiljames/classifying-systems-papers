@@ -9,7 +9,7 @@ import json
 import csv
 import pandas as pd
 
-path = '/Users/jillianjames/systemsproject/fulltext'
+path = '/Users/jillianjames/classifying-systems-papers/fulltext'
 sorted_tags = ['analysis', 'bigscale', 'continuing', 'data', 'experience','experiment', 'negative', 'open', 'position', 'positive', 'preliminary', 'reproduction', 'simulation', 'survey', 'system'] 
 
 
