@@ -2,8 +2,8 @@
 
 # Python program for running ML algorithms that predicts
 # the contents of a systems paper using a bag-of-words model
-# consisting of words and bigrams from a dataset of computer systems
-# research papers. 
+# consisting of words and bigrams from a dataset of over 2000
+# computer systems research papers. 
 
 import csv
 import pandas as pd
