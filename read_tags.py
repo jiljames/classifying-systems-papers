@@ -1,6 +1,6 @@
 
 # Jillian James, jiljames at reed dot edu
-# Program for reading tags to create matrix file for training algorithm
+# Program for reading tags to create tag and data csv files for training algorithm
 
 
 import os
@@ -13,9 +13,9 @@ path = '/Users/jillianjames/systemsproject/fulltext'
 sorted_tags = ['analysis', 'bigscale', 'continuing', 'data', 'experience','experiment', 'negative', 'open', 'position', 'positive', 'preliminary', 'reproduction', 'simulation', 'survey', 'system'] 
 
 
-###### FOR READING TAGS AND GENERATING TAG_FEATURES.CSV #######
 
 def getConfAndPaper(filepath):
+	# Given a filepath, returns conference and paper.
 	confname = ""
 	paper = filepath[-11:-4]
 	place = -12
@@ -61,7 +61,8 @@ def generate_row(paper, manual, sorted_tags):
 
 
 def make_tag_features():
-	# Make column header:
+	# Given a conference and paper, returns the tags paper
+	# was classified with
 	column_labels = sorted_tags[:]
 	for i in range(len(column_labels)):
 		column_labels[i] = "tag_id_"+column_labels[i]
@@ -83,9 +84,9 @@ def make_tag_features():
 
 
 
-####### SIMPLE FUNCTION TO COUNT OCCURENCES/PERCENTAGE OF TAGS ########
 
 def count_tags():
+	# Simple function to count occurences of tags
 	with open("tag_features.csv", 'r') as tagcsv:
 		tf = pd.read_csv(tagcsv)
 		tagcsv.close()
@@ -100,71 +101,6 @@ def count_tags():
 		print("------------------")
 	print("Total Papers: "+str(len(tag_column)))
 	return
-
-
-
-##### FOR CREATING ____matrix.csv FILE ###########
-
-
-# def make_tag_matrix(tag, lemmatized = True):
-# 	with open("tag_features.csv", 'r') as tagcsv:
-# 		tf = pd.read_csv(tagcsv)
-# 		tagcsv.close()
-	
-# 	#Pick wf as either regular or lemmatized token files
-# 	#based on parameters.
-
-# 	if lemmatized == False:
-# 		with open("tokens.csv", "r") as tokencsv:
-# 			wf = pd.read_csv(tokencsv)
-# 			tokencsv.close()
-# 	else:
-# 		with open("lemmatized_tokens.csv", "r") as tokencsv:
-# 			wf = pd.read_csv(tokencsv)
-# 			tokencsv.close()
-
-# 	#save tagged paper names and relevant tag column
-# 	tagged_papers = tf["Name"]
-# 	tag_column = tf["tag_id_"+tag.lower()]
-
-# 	#save all paper names, all words, and all counts
-# 	papers = wf["doc_id"]
-# 	words = wf["word"]
-# 	count = wf["n"]
-
-# 	#Add the "Name" and tag columns to column labels
-# 	column_labels = words.drop_duplicates()
-# 	column_labels = pd.concat([pd.Series(["Name"]), column_labels])
-# 	column_labels = pd.concat([column_labels, pd.Series([tag])])
-
-# 	#Write the matrix
-# 	with open(tag+"_matrix.csv", "w") as csvfile:
-# 		writer = csv.DictWriter(csvfile, fieldnames = column_labels)
-# 		writer.writeheader()
-
-# 		baserow = {}
-# 		#Initialize each row to contain all zeroes
-# 		for label in column_labels:
-# 			baserow[label] = 0
-# 		j = 0
-
-# 		#If a paper is tagged, make a row of it with
-# 		# all its word counts and write to matrix
-# 		for tpaper in tagged_papers:
-# 			row = baserow
-# 			row["Name"] = tpaper
-# 			i = 0
-# 			for paper in papers:
-# 				if paper == tpaper:
-# 					row[words[i]] = count[i]
-# 				i+=1
-# 			####FOUND IT!!!!####	
-# 			row["tag_id_"+tag.lower()] = tag_column[j]
-# 			j+=1
-# 			writer.writerow(row)
-
-# 		csvfile.close()
-# 	return
 
 
 
@@ -191,15 +127,9 @@ def make_tag_matrix(tag):
 			allf = pd.read_csv(alltermscsv)
 			alltermscsv.close()
 
-	#just stack the words and bigrams dataframes together
-	#!!!!!!comment out to remove error!!!!!!!
-	# wbf = wf.append(bf)
-	#save all paper names, all words, and all counts
-	#!!!!!!change to wf or bf to remove error!!!!!!
 
 	papers = allf["doc_id"]
 	words = allf["term"]
-	# df['column'] = df['column'].astype('|S')
 	count = allf["n"]
 
 	print("attatched matrices")
@@ -230,8 +160,7 @@ def make_tag_matrix(tag):
 			for paper in papers:
 				if paper == tpaper:
 					row[words.iloc[i]] = count.iloc[i]
-				i+=1
-			####FOUND IT!!!!####	
+				i+=1	
 			row["tag_id_"+tag.lower()] = tag_column[j]
 			j+=1
 			writer.writerow(row)
